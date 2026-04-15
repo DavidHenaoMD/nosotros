@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comidas que hemos compartido 🍽</title>
+
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="manifest" href="manifest.json">
+
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="menu-pro">
+    <div class="menu-contenido">
+      <div class="menu-logo">💘 Nosotros</div>
+      <div class="menu-links">
+        <a href="index.html">Inicio</a>
+        <a href="historia.html">Historia</a>
+        <a href="viajes.html">Viajes</a>
+        <a href="planes.html">Planes</a>
+        <a href="comidas.html" class="activo">Comidas</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SIMPLE Y CLARO -->
+  <header class="hero-simple">
+    <h1>Comidas que hemos compartido</h1>
+    <p>No eran solo platos, eran momentos contigo 💘</p>
+  </header>
+
+  <!-- GALERÍA NUEVA -->
+  <section class="comidas-grid">
+
+    <article class="comida-item">
+      <img src="img/comida1.jpg" alt="Primera salida a comer">
+      <div class="comida-texto">
+        <h3>Primera salida a comer</h3>
+        <p>Ese día que empezó todo 💘</p>
+      </div>
+    </article>
+
+    <article class="comida-item">
+      <img src="img/comida2.jpg" alt="Antojo favorito">
+      <div class="comida-texto">
+        <h3>Antojo favorito</h3>
+        <p>Ese sabor que no olvidamos ✨</p>
+      </div>
+    </article>
+
+    <article class="comida-item">
+      <img src="img/comida3.jpg" alt="Nuestra comida favorita">
+      <div class="comida-texto">
+        <h3>Nuestra comida favorita</h3>
+        <p>Siempre la pedimos 😋</p>
+      </div>
+    </article>
+
+  </section>
+
+</body>
+<!-- PLANES -->
+  <section class="planes-grid">
+    <!-- tus tarjetas -->
+  </section>
+
+  <!-- JS (AQUÍ VA) -->
+  <script>
+  const estados = ["soñado", "planeado", "cumplido"];
+  const textos = ["Soñado", "Planeado", "Cumplido"];
+
+  // Cargar estados guardados al iniciar
+  document.querySelectorAll(".plan-card").forEach(card => {
+    const id = card.dataset.id;
+    const estadoGuardado = localStorage.getItem("plan-" + id);
+
+    if (estadoGuardado && estados.includes(estadoGuardado)) {
+      estados.forEach(e => card.classList.remove(e));
+      card.classList.add(estadoGuardado);
+
+      const btn = card.querySelector(".estado-btn");
+      btn.textContent = textos[estados.indexOf(estadoGuardado)];
+    }
+  });
+
+  // Cambiar estado y GUARDARLO
+  document.querySelectorAll(".estado-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const card = btn.closest(".plan-card");
+      const id = card.dataset.id;
+
+      let actual = estados.findIndex(e => card.classList.contains(e));
+      card.classList.remove(estados[actual]);
+
+      let nuevo = (actual + 1) % estados.length;
+      card.classList.add(estados[nuevo]);
+      btn.textContent = textos[nuevo];
+
+      // Guardar en localStorage
+      localStorage.setItem("plan-" + id, estados[nuevo]);
+    });
+  });
+
+  // Abrir / cerrar con slide
+  document.querySelectorAll(".plan-header").forEach(header => {
+    header.addEventListener("click", () => {
+      header.parentElement.classList.toggle("abierto");
+    });
+  });
+</script>
+
+</body>
+</html>
+
+</html>

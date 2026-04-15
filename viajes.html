@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lugares que hemos visitado 🌍</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="menu-pro">
+    <div class="menu-contenido">
+      <div class="menu-logo">💘 Nosotros</div>
+      <div class="menu-links">
+        <a href="index.html">Inicio</a>
+        <a href="historia.html">Historia</a>
+        <a href="viajes.html" class="activo">Viajes</a>
+        <a href="planes.html">Planes</a>
+        <a href="comidas.html">Comidas</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero hero-viajes">
+    <h1>Lugares que hemos visitado 💕</h1>
+  </header>
+
+  <!-- CONTENIDO -->
+  <section class="lugares-grid">
+
+    <!-- VISITADOS -->
+    <div class="lugares-columna">
+      <h3>📍 Lugares que conocemos</h3>
+      <div class="burbujas" id="visitados"></div>
+    </div>
+
+    <!-- PENDIENTES -->
+    <div class="lugares-columna">
+      <h3>📌 Lugares por conocer en Colombia</h3>
+      <div class="burbujas" id="pendientes">
+        <span class="burbuja" data-id="slush-night">Slush night</span>
+        <span class="burbuja" data-id="heaven-manrique">Heaven manrique la 45</span>
+        <span class="burbuja" data-id="envigado">Envigado</span>
+        <span class="burbuja" data-id="centro-medellin">Centro de Medellín</span>
+        <span class="burbuja" data-id="cocorna">Cocorná</span>
+        <span class="burbuja" data-id="comuna-13">Comuna 13</span>
+        <span class="burbuja" data-id="atanasio">Atanasio Girardot</span>
+        <span class="burbuja" data-id="girardota">Girardota</span>
+        <span class="burbuja" data-id="castilla">Castilla</span>
+        <span class="burbuja" data-id="alumbrados">Alumbrados río Medellín</span>
+        <span class="burbuja" data-id="san-pedro">San Pedro de los Milagros</span>
+        <span class="burbuja" data-id="cisneros">Cisneros</span>
+        <span class="burbuja" data-id="santa-fe">Santa Fe de Antioquia</span>
+        <span class="burbuja" data-id="tolu">Tolú Coveñas</span>
+        <span class="burbuja" data-id="cartagena">Cartagena</span>
+        <span class="burbuja" data-id="san-andres">San Andrés</span>
+        <span class="burbuja" data-id="cali">Cali 🙄</span>
+        <span class="burbuja" data-id="manizales">Manizales</span>
+        <span class="burbuja" data-id="pereira">Pereira</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SCRIPT -->
+  <script>
+    const pendientes = document.getElementById("pendientes");
+    const visitados = document.getElementById("visitados");
+
+    // Restaurar estado
+    document.querySelectorAll(".burbuja").forEach(burbuja => {
+      const id = burbuja.dataset.id;
+      if (localStorage.getItem("lugar-" + id) === "visitado") {
+        burbuja.classList.add("hecho");
+        visitados.appendChild(burbuja);
+      }
+    });
+
+    // Click
+    document.addEventListener("click", e => {
+      if (!e.target.classList.contains("burbuja")) return;
+
+      const burbuja = e.target;
+      const id = burbuja.dataset.id;
+
+      if (burbuja.parentElement.id === "pendientes") {
+        burbuja.classList.add("hecho");
+        visitados.appendChild(burbuja);
+        localStorage.setItem("lugar-" + id, "visitado");
+      } else {
+        burbuja.classList.remove("hecho");
+        pendientes.appendChild(burbuja);
+        localStorage.removeItem("lugar-" + id);
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+
+

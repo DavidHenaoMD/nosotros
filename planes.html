@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planes por cumplir ✈️</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+  <link rel="manifest" href="manifest.json">
+
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="menu-pro">
+    <div class="menu-contenido">
+      <div class="menu-logo">💜 Nosotros</div>
+      <div class="menu-links">
+        <a href="index.html">Inicio</a>
+        <a href="historia.html">Historia</a>
+        <a href="viajes.html">Viajes</a>
+        <a href="planes.html" class="activo">Planes</a>
+        <a href="comidas.html">Comidas</a>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="progreso">
+  <span id="progreso-texto">0 planes cumplidos</span>
+  <div class="barra">
+    <div class="barra-interna" id="barra-interna"></div>
+  </div>
+</div>
+
+
+  <!-- HERO -->
+  <header class="hero-simple">
+    <h1>Planes por cumplir ✈️</h1>
+    <p>Sueños que queremos vivir juntos</p>
+  </header>
+
+  <!-- PLANES -->
+  <section class="planes-grid">
+
+    <!-- COLOMBIA -->
+    <div class="plan-card soñado" data-id="colombia">
+      <div class="plan-header">
+        <h3>🇨🇴 Colombia</h3>
+        <button class="estado-btn">Soñado</button>
+      </div>
+
+      <div class="plan-detalles">
+        <ul>
+          <li>Medellín</li>
+          <li>Cartagena</li>
+          <li>Eje cafetero</li>
+        </ul>
+        <p class="plan-frase">
+          Recorrer nuestro país y crear recuerdos juntos 💜
+        </p>
+      </div>
+    </div>
+
+    <!-- BRASIL -->
+    <div class="plan-card planeado" data-id="brasil">
+      <div class="plan-header">
+        <h3>🇧🇷 Brasil</h3>
+        <button class="estado-btn">Planeado</button>
+      </div>
+
+      <div class="plan-detalles">
+        <ul>
+          <li>Río de Janeiro</li>
+          <li>Playas</li>
+        </ul>
+        <p class="plan-frase">
+          Atardeceres, risas y mar 🏖️
+        </p>
+      </div>
+    </div>
+
+    <!-- ESPAÑA -->
+    <div class="plan-card cumplido" data-id="espana">
+      <div class="plan-header">
+        <h3>🇪🇸 España</h3>
+        <button class="estado-btn">Cumplido</button>
+      </div>
+
+      <div class="plan-detalles">
+        <ul>
+          <li>Barcelona</li>
+          <li>Madrid</li>
+        </ul>
+        <p class="plan-frase">
+          Un recuerdo que ya vive en nosotros ✨
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SCRIPT (SIEMPRE AL FINAL) -->
+  <script>
+    const estados = ["soñado", "planeado", "cumplido"];
+    const textos = ["Soñado", "Planeado", "Cumplido"];
+
+    // Restaurar estados guardados
+    document.querySelectorAll(".plan-card").forEach(card => {
+      const id = card.dataset.id;
+      const guardado = localStorage.getItem("plan-" + id);
+
+      if (guardado && estados.includes(guardado)) {
+        estados.forEach(e => card.classList.remove(e));
+        card.classList.add(guardado);
+        card.querySelector(".estado-btn").textContent =
+          textos[estados.indexOf(guardado)];
+      }
+    });
+
+    // Cambiar estado y guardar
+    document.querySelectorAll(".estado-btn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.stopPropagation();
+        const card = btn.closest(".plan-card");
+        const id = card.dataset.id;
+
+        let actual = estados.findIndex(e =>
+          card.classList.contains(e)
+        );
+        card.classList.remove(estados[actual]);
+
+        let nuevo = (actual + 1) % estados.length;
+        card.classList.add(estados[nuevo]);
+        btn.textContent = textos[nuevo];
+
+        localStorage.setItem("plan-" + id, estados[nuevo]);
+      });
+    });
+
+    // Abrir / cerrar con slide
+    document.querySelectorAll(".plan-header").forEach(header => {
+      header.addEventListener("click", () => {
+        header.parentElement.classList.toggle("abierto");
+      });
+    });
+  </script>
+
+  <script>
+  function actualizarProgreso() {
+    const cards = document.querySelectorAll(".plan-card");
+    const cumplidos = document.querySelectorAll(".plan-card.cumplido");
+
+    const porcentaje = (cumplidos.length / cards.length) * 100;
+
+    document.getElementById("barra-interna").style.width = porcentaje + "%";
+    document.getElementById("progreso-texto").innerText =
+      `${cumplidos.length} de ${cards.length} planes cumplidos 💜`;
+  }
+
+  // Llama la función al cargar
+  actualizarProgreso();
+
+  // Llama la función cada vez que cambias un estado
+  document.querySelectorAll(".estado-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      setTimeout(actualizarProgreso, 100);
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para la niña de mi corazón 💘</title>
+
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="manifest" href="manifest.json">
+
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="menu-pro">
+    <div class="menu-contenido">
+      <div class="menu-logo">💘 Nosotros</div>
+      <div class="menu-links">
+        <a href="index.html" class="activo">Inicio</a>
+        <a href="historia.html">Historia</a>
+        <a href="viajes.html">Viajes</a>
+        <a href="planes.html">Planes</a>
+        <a href="comidas.html">Comidas</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO CON FOTOS -->
+  <header class="hero-inicio">
+    <div class="hero-texto">
+      <span class="badge">Nuestro espacio 💘</span>
+      <h1>
+        Para la niña de mi corazón 💘<br>
+    
+      </h1>
+      <p>
+        Aquí guardamos recuerdos, fotos,
+        planes y momentos que solo tienen sentido juntos.
+      </p>
+    </div>
+
+    <div class="hero-fotos">
+      <img src="img/nosotros1.jpg" alt="Nosotros 1">
+      <img src="img/nosotros2.jpg" alt="Nosotros 2">
+      <img src="img/nosotros3.jpg" alt="Nosotros 3">
+      <img src="img/nosotros4.jpg" alt="Nosotros 4">
+    </div>
+  </header>
+
+</body>
+<!-- PLANES -->
+  <section class="planes-grid">
+    <!-- tus tarjetas -->
+  </section>
+
+  <!-- JS (AQUÍ VA) -->
+  <<script>
+  const estados = ["soñado", "planeado", "cumplido"];
+  const textos = ["Soñado", "Planeado", "Cumplido"];
+
+  // Cargar estados guardados al iniciar
+  document.querySelectorAll(".plan-card").forEach(card => {
+    const id = card.dataset.id;
+    const estadoGuardado = localStorage.getItem("plan-" + id);
+
+    if (estadoGuardado && estados.includes(estadoGuardado)) {
+      estados.forEach(e => card.classList.remove(e));
+      card.classList.add(estadoGuardado);
+
+      const btn = card.querySelector(".estado-btn");
+      btn.textContent = textos[estados.indexOf(estadoGuardado)];
+    }
+  });
+
+  // Cambiar estado y GUARDARLO
+  document.querySelectorAll(".estado-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const card = btn.closest(".plan-card");
+      const id = card.dataset.id;
+
+      let actual = estados.findIndex(e => card.classList.contains(e));
+      card.classList.remove(estados[actual]);
+
+      let nuevo = (actual + 1) % estados.length;
+      card.classList.add(estados[nuevo]);
+      btn.textContent = textos[nuevo];
+
+      // Guardar en localStorage
+      localStorage.setItem("plan-" + id, estados[nuevo]);
+    });
+  });
+
+  // Abrir / cerrar con slide
+  document.querySelectorAll(".plan-header").forEach(header => {
+    header.addEventListener("click", () => {
+      header.parentElement.classList.toggle("abierto");
+    });
+  });
+</script>
+
+</body>
+</html>
+
+</html>

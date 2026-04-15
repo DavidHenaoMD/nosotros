@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuestra historia 💕</title>
+
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="manifest" href="manifest.json">
+
+</head>
+
+<body>
+
+  
+  <nav class="menu-pro">
+  <div class="menu-contenido">
+    <div class="menu-logo">
+      💘 Nosotros
+    </div>
+
+    <div class="menu-links">
+      <a href="index.html" class="activo">Inicio</a>
+      <a href="historia.html">Historia</a>
+      <a href="viajes.html">Viajes</a>
+      <a href="planes.html">Planes</a>
+      <a href="comidas.html">Comidas</a>
+    </div>
+  </div>
+</nav>
+
+  <header class="hero">
+    <h1>Nuestra historia 💘</h1>
+    <p>Un pedacito de todo lo que somos</p>
+  </header>
+
+  <main class="contenedor">
+
+    <p class="texto">
+      Nuestra historia empezo en un mundo vacio y lleno de cosas malas, estabamos perdidos 
+    y sin rumbo, pero Dios nos encontro y nos unio, y desde ese momento todo cambio, todo se lleno de alegria
+    empece a ver los colores mas intensos y en poco tiempo te convertiste en mi persona favorita, la mujer que siempre
+    esta conmigo, a la que le saco la rabia y me pega pero que despues con su amor me abraza y me arropa.
+
+    Te amo mucho isabel sofia, eres la mujer de mi vida, con la que quiero formar una familia, con la bendición de Dios
+    y con la que quiero vivir el resto de mi vida. 
+    </p>
+
+    <p class="texto">
+      Desde el primer día supe que había algo distinto, ese dia en slush sabia que los dos no perteneciamos a ese mundo, sabia que Dios te habia enviado 
+      porque se lo pedi, le dije que me enviara un angelito y llegaste tu, con tu alegria y tu locura la que me enamoro perdidamente. Por eso le doy infinitas gracias a Dios por ponerte 
+      en mi camino, cuando mi mundo estaba roto y necesitaba mucho de ti y no lo sabia.
+    
+    </p>
+
+    <p class="texto">
+      Hoy miro hacia atrás y agradezco cada paso, porque esta historia todavia no acaba señorita, vamos siempre de la mano de Dios y vamos a tener una relación que le agrade para que podamos estar tranquilos 
+      y felices en su presencia, porque quiero que esta historia siga en el reino de los cielos junticos. te amo mucho mi niña bella y sigamos asi de juiciosos que Dios nos va a bendecir con muchas cosas. Nos va a dar 
+      una niña super hermosa igualita a mi jajaaja, pero con los ojos tuyos. te amo mucho esposa mia 
+       💘
+    </p>
+
+  </main>
+
+</body>
+<!-- PLANES -->
+  <section class="planes-grid">
+    <!-- tus tarjetas -->
+  </section>
+
+  <!-- JS (AQUÍ VA) -->
+ <script>
+  const estados = ["soñado", "planeado", "cumplido"];
+  const textos = ["Soñado", "Planeado", "Cumplido"];
+
+  // Cargar estados guardados al iniciar
+  document.querySelectorAll(".plan-card").forEach(card => {
+    const id = card.dataset.id;
+    const estadoGuardado = localStorage.getItem("plan-" + id);
+
+    if (estadoGuardado && estados.includes(estadoGuardado)) {
+      estados.forEach(e => card.classList.remove(e));
+      card.classList.add(estadoGuardado);
+
+      const btn = card.querySelector(".estado-btn");
+      btn.textContent = textos[estados.indexOf(estadoGuardado)];
+    }
+  });
+
+  // Cambiar estado y GUARDARLO
+  document.querySelectorAll(".estado-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const card = btn.closest(".plan-card");
+      const id = card.dataset.id;
+
+      let actual = estados.findIndex(e => card.classList.contains(e));
+      card.classList.remove(estados[actual]);
+
+      let nuevo = (actual + 1) % estados.length;
+      card.classList.add(estados[nuevo]);
+      btn.textContent = textos[nuevo];
+
+      // Guardar en localStorage
+      localStorage.setItem("plan-" + id, estados[nuevo]);
+    });
+  });
+
+  // Abrir / cerrar con slide
+  document.querySelectorAll(".plan-header").forEach(header => {
+    header.addEventListener("click", () => {
+      header.parentElement.classList.toggle("abierto");
+    });
+  });
+</script>
+
+</body>
+</html>
+
+</html>
